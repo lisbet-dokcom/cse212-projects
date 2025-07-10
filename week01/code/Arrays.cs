@@ -13,7 +13,19 @@ public static class Arrays
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
 
-        return []; // replace this return statement with your own
+        //Step 1: Create an empty array with the size of "length"
+        double[] result = new double[length];
+
+        //Step 2: Use a loop that starts from 0 and goes up to one less than length
+        for (int i = 0; i < length; i++)
+        {
+            //Step 3: At each step, calculate number * (i + 1)
+            //Save it in the result arrat at position i    
+            result[i] = number * (i + 1);
+        }
+
+        //Step 4: Return the array after the loop is done
+        return result; // replace this return statement with your own
     }
 
     /// <summary>
@@ -29,5 +41,17 @@ public static class Arrays
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
+
+        //Step 1: Get the last 'amount' of items from the list and save
+        //For example, if amount is 3 and the list is [1,2,3,4,5,6,7,8,9], this will get [7,8,9] 
+        List<int> range = data.GetRange(data.Count - amount, amount);
+
+        //Step 2: Remove those 'amount' of items from the end of the original list.
+        //In the same example, the list will now be [1,2,3,4,5,6]
+        data.RemoveRange(data.Count - amount, amount);
+
+        //Step 3: Insert the saved items ('range') at the beginning (index 0) of the list
+        //After inserting, the list becomes [7,8,9,1,2,3,4,5] - rotated right by the specified amount.
+        data.InsertRange(0, range);
     }
 }
