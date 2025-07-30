@@ -33,6 +33,20 @@ public class Maze
     public void MoveLeft()
     {
         // FILL IN CODE
+        var currentPosition = (_currX, _currY);
+        if (_mazeMap.TryGetValue(currentPosition, out bool[] directions))
+        {
+            bool canMoveLeft = directions[0];
+            if (!canMoveLeft)
+            {
+                throw new InvalidOperationException("Can't go that way!");
+            }
+            _currX--;
+        }
+        else
+        {
+            throw new InvalidOperationException("Current position is not in the maze!");
+        }
     }
 
     /// <summary>
@@ -42,6 +56,20 @@ public class Maze
     public void MoveRight()
     {
         // FILL IN CODE
+        var currentPosition = (_currX, _currY);
+        if (_mazeMap.TryGetValue(currentPosition, out bool[] directions))
+        {
+            bool canMoveRight = directions[1];
+            if (!canMoveRight)
+            {
+                throw new InvalidOperationException("Can't go that way!");
+            }
+            _currX++;
+        }
+        else
+        {
+            throw new InvalidOperationException("Current position is not in the maze!");
+        }
     }
 
     /// <summary>
@@ -51,6 +79,20 @@ public class Maze
     public void MoveUp()
     {
         // FILL IN CODE
+        var currentPosition = (_currX, _currY);
+        if (_mazeMap.TryGetValue(currentPosition, out bool[] directions))
+        {
+            bool canMoveUp = directions[2];
+            if (!canMoveUp)
+            {
+                throw new InvalidOperationException("Can't go that way!");
+            }
+            _currY--;
+        }
+        else
+        {
+            throw new InvalidOperationException("Current position is not in the maze!");
+        }
     }
 
     /// <summary>
@@ -60,6 +102,20 @@ public class Maze
     public void MoveDown()
     {
         // FILL IN CODE
+        var currentPosition = (_currX, _currY);
+        if (_mazeMap.TryGetValue(currentPosition, out bool[] directions))
+        {
+            bool canMoveDown = directions[3];
+            if (!canMoveDown)
+            {
+                throw new InvalidOperationException("Can't go that way!");
+            }
+            _currY++;
+        }
+        else
+        {
+            throw new InvalidOperationException("Current position is not in the maze!");
+        }
     }
 
     public string GetStatus()

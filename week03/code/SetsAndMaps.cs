@@ -21,8 +21,24 @@ public static class SetsAndMaps
     /// <param name="words">An array of 2-character words (lowercase, no duplicates)</param>
     public static string[] FindPairs(string[] words)
     {
-        // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+        var pair = new HashSet<string>();
+        var result = new List<string>();
+
+        foreach (var word in words)
+        {
+            if (word[0] == word[1]) continue;
+
+            if (pair.Contains(word)) continue;
+
+            string reverse = $"{word[1]}{word[0]}";
+            if (pair.Contains(reverse))
+            {
+                result.Add($"{word} & {reverse}");
+            }
+            pair.Add(word);
+        }
+
+        return result.ToArray();
     }
 
     /// <summary>
@@ -39,10 +55,21 @@ public static class SetsAndMaps
     public static Dictionary<string, int> SummarizeDegrees(string filename)
     {
         var degrees = new Dictionary<string, int>();
-        foreach (var line in File.ReadLines(filename))
+        foreach (var line in File.ReadLines("../../../census.txt"))
         {
             var fields = line.Split(",");
             // TODO Problem 2 - ADD YOUR CODE HERE
+            var degreeIndex = fields[3];
+
+            if (!degrees.ContainsKey(degreeIndex))
+            {
+                degrees[degreeIndex] = 1;
+            }
+            else
+            {
+                degrees[degreeIndex] += 1;
+            }
+
         }
 
         return degrees;
@@ -67,7 +94,44 @@ public static class SetsAndMaps
     public static bool IsAnagram(string word1, string word2)
     {
         // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+        word1 = word1.Replace(" ", "").ToLower();
+        word2 = word2.Replace(" ", "").ToLower();
+
+        if (word1.Length != word2.Length) return false;
+
+        var dictWord1 = new Dictionary<char, int>();
+        var dictWord2 = new Dictionary<char, int>();
+
+        foreach (char a in word1)
+        {
+            if (dictWord1.ContainsKey(a))
+            {
+                dictWord1[a] += 1;
+            }
+            else
+            {
+                dictWord1[a] = 1;
+            }
+        }
+
+        foreach (char b in word2)
+        {
+            if (dictWord2.ContainsKey(b))
+            {
+                dictWord2[b] += 1;
+            }
+            else
+            {
+                dictWord2[b] = 1;
+            }
+        }
+
+        foreach (var kv in dictWord1)
+        {
+            if (!dictWord2.ContainsKey(kv.Key) || dictWord2[kv.Key] != kv.Value)
+                return false;
+        }
+        return true;
     }
 
     /// <summary>
