@@ -1,4 +1,5 @@
 using System.Collections;
+using System.ComponentModel.DataAnnotations;
 
 public static class Recursion
 {
@@ -15,7 +16,14 @@ public static class Recursion
     public static int SumSquaresRecursive(int n)
     {
         // TODO Start Problem 1
-        return 0;
+        if (n <= 0)
+        {
+            return 0;
+        }
+        else
+        {
+            return (n * n) + SumSquaresRecursive(n - 1);
+        }
     }
 
     /// <summary>
@@ -40,6 +48,18 @@ public static class Recursion
     public static void PermutationsChoose(List<string> results, string letters, int size, string word = "")
     {
         // TODO Start Problem 2
+        if (word.Length == size)
+        {
+            results.Add(word);
+        }
+        else
+        {
+            for (var i = 0; i < letters.Length; i++)
+            {
+                var lettersLeft = letters.Remove(i, 1);
+                PermutationsChoose(results, lettersLeft, size, word + letters[i]);
+            }
+        }
     }
 
     /// <summary>
@@ -86,6 +106,8 @@ public static class Recursion
     /// </summary>
     public static decimal CountWaysToClimb(int s, Dictionary<int, decimal>? remember = null)
     {
+        if (remember == null)
+            remember = new Dictionary<int, decimal>();
         // Base Cases
         if (s == 0)
             return 0;
@@ -99,8 +121,12 @@ public static class Recursion
         // TODO Start Problem 3
 
         // Solve using recursion
-        decimal ways = CountWaysToClimb(s - 1) + CountWaysToClimb(s - 2) + CountWaysToClimb(s - 3);
-        return ways;
+        if (remember.ContainsKey(s))
+            return remember[s];
+
+        var result = CountWaysToClimb(s - 1, remember) + CountWaysToClimb(s - 2, remember) + CountWaysToClimb(s - 3, remember);
+        remember[s] = result;
+        return result;
     }
 
     /// <summary>
@@ -119,6 +145,21 @@ public static class Recursion
     public static void WildcardBinary(string pattern, List<string> results)
     {
         // TODO Start Problem 4
+        int indexPosition = pattern.IndexOf("*");
+
+        if (indexPosition == -1)
+        {
+            results.Add(pattern);
+        }
+
+        else
+        {
+            string patternZero = pattern.Substring(0, indexPosition) + "0" + pattern.Substring(indexPosition + 1);
+            WildcardBinary(patternZero, results);
+
+            string patternOne = pattern.Substring(0, indexPosition) + "1" + pattern.Substring(indexPosition + 1);
+            WildcardBinary(patternOne, results);
+        }
     }
 
     /// <summary>
@@ -129,10 +170,11 @@ public static class Recursion
     {
         // If this is the first time running the function, then we need
         // to initialize the currPath list.
-        if (currPath == null) {
+        if (currPath == null)
+        {
             currPath = new List<ValueTuple<int, int>>();
         }
-        
+
         // currPath.Add((1,2)); // Use this syntax to add to the current path
 
         // TODO Start Problem 5
